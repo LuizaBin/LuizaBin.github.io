@@ -1,10 +1,11 @@
 # Luiza Binaj - Portfolio
 
-Personal portfolio website showcasing my experience as a Technical Support Engineer.
+Personal portfolio website showcasing my experience as a Quality Assurance Engineer.
 
 ## About
 
-This site highlights my background in API troubleshooting, SaaS support, and technical problem-solving.
+QA professional with 3+ years experience in API and web testing, data validation, and defect tracking. Strong foundation in functional and regression testing, with exposure to automation, monitoring tools, and CI/CD workflows. Collaborative, detail-oriented, and quality-driven.
+
 
 ## Contact
 
