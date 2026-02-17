@@ -3,472 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luiza Binaj - Technical Support Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Luiza Binaj - QA Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --midnight: #0a0e27;
-            --electric: #00ff9d;
-            --cyan: #00d4ff;
-            --violet: #b794f6;
-            --cream: #fef9f3;
-            --gray: #8b92ab;
+            --deep: #1a0f14;
+            --surface: #221218;
+            --card: #2b1720;
+            --rose: #f0a0b8;
+            --blush: #f7c5d5;
+            --gold: #e8c97e;
+            --champagne: #f5e6c8;
+            --petal: #fdf0f4;
+            --muted: #9e7d88;
+            --border: rgba(240, 160, 184, 0.15);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--midnight);
-            color: var(--cream);
+            font-family: 'DM Sans', sans-serif;
+            background: var(--deep);
+            color: var(--petal);
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* Animated background grid */
-        .bg-grid {
+        /* ── Noise texture overlay ── */
+        body::before {
+            content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(var(--electric) 1px, transparent 1px),
-                linear-gradient(90deg, var(--electric) 1px, transparent 1px);
-            background-size: 60px 60px;
-            opacity: 0.03;
-            animation: gridMove 20s linear infinite;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.35;
             pointer-events: none;
             z-index: 0;
         }
 
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
-        }
-
-        /* Gradient orbs */
+        /* ── Ambient orbs ── */
         .orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+            animation: drift ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(240,160,184,0.18), transparent 70%);
+            top: -200px; right: -150px;
+            animation-duration: 12s;
+        }
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(232,201,126,0.12), transparent 70%);
+            bottom: -150px; left: -100px;
+            animation-duration: 15s; animation-direction: reverse;
+        }
+        .orb-3 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(247,197,213,0.10), transparent 70%);
+            top: 45%; left: 30%;
+            animation-duration: 18s;
+        }
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(25px, -35px); }
+        }
+
+        /* ── Fine decorative line pattern ── */
+        .bg-lines {
+            position: fixed; inset: 0;
+            background-image:
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 60px,
+                    rgba(240,160,184,0.025) 60px,
+                    rgba(240,160,184,0.025) 61px
+                );
             pointer-events: none;
             z-index: 0;
         }
 
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--electric);
-            top: -200px;
-            right: -200px;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--cyan);
-            bottom: -150px;
-            left: -150px;
-            animation: float 10s ease-in-out infinite reverse;
-        }
-
-        .orb-3 {
-            width: 350px;
-            height: 350px;
-            background: var(--violet);
-            top: 40%;
-            right: 10%;
-            animation: float 12s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -30px) scale(1.1); }
-        }
-
-        /* Container */
+        /* ── Layout ── */
         .container {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 40px;
+            padding: 70px 48px;
         }
 
-        /* Header */
+        /* ── Header ── */
         header {
-            margin-bottom: 80px;
-            animation: fadeInDown 0.8s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 56px;
+            margin-bottom: 96px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.9s cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .profile-photo {
+            width: 168px;
+            height: 168px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 2px solid transparent;
+            background:
+                linear-gradient(var(--card), var(--card)) padding-box,
+                linear-gradient(135deg, var(--rose), var(--gold), var(--blush)) border-box;
+            box-shadow:
+                0 0 0 6px rgba(240,160,184,0.08),
+                0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .header-text { flex: 1; min-width: 260px; }
+
+        .eyebrow {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
         }
 
         .name {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            line-height: 0.95;
-            margin-bottom: 16px;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, var(--electric) 0%, var(--cyan) 50%, var(--violet) 100%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.2rem, 8vw, 6rem);
+            font-weight: 300;
+            line-height: 0.92;
+            letter-spacing: -0.01em;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, var(--champagne) 0%, var(--rose) 55%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { filter: hue-rotate(0deg) brightness(1); }
-            50% { filter: hue-rotate(15deg) brightness(1.2); }
         }
 
         .title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            font-weight: 600;
-            color: var(--gray);
-            margin-bottom: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
         }
 
         .contact {
             display: flex;
             flex-wrap: wrap;
-            gap: 24px;
-            font-size: 0.95rem;
-            color: var(--gray);
-            margin-top: 24px;
+            gap: 20px;
+            font-size: 0.88rem;
+            color: var(--muted);
         }
-
         .contact a {
-            color: var(--electric);
+            color: var(--rose);
             text-decoration: none;
+            transition: color 0.25s;
             position: relative;
-            transition: color 0.3s;
         }
-
-        .contact a:hover {
-            color: var(--cyan);
-        }
-
         .contact a::after {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--cyan);
+            bottom: -2px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
             transition: width 0.3s;
         }
+        .contact a:hover { color: var(--gold); }
+        .contact a:hover::after { width: 100%; }
 
-        .contact a:hover::after {
-            width: 100%;
-        }
-
-        /* Sections */
+        /* ── Sections ── */
         section {
-            margin-bottom: 100px;
-            animation: fadeInUp 0.8s ease-out;
-            animation-fill-mode: both;
+            margin-bottom: 96px;
+            animation: fadeUp 0.9s cubic-bezier(.16,1,.3,1) both;
+        }
+        section:nth-child(2) { animation-delay: 0.08s; }
+        section:nth-child(3) { animation-delay: 0.16s; }
+        section:nth-child(4) { animation-delay: 0.24s; }
+        section:nth-child(5) { animation-delay: 0.32s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        section:nth-child(2) { animation-delay: 0.1s; }
-        section:nth-child(3) { animation-delay: 0.2s; }
-        section:nth-child(4) { animation-delay: 0.3s; }
-        section:nth-child(5) { animation-delay: 0.4s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ── Section headings ── */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .section-label h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--champagne);
+            white-space: nowrap;
+        }
+        .section-rule {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(240,160,184,0.4), transparent);
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h2 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 32px;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--electric), var(--cyan));
-            border-radius: 2px;
-        }
-
-        /* About */
+        /* ── About ── */
         .about-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--gray);
-            max-width: 800px;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--muted);
+            max-width: 740px;
+            font-weight: 300;
         }
-
         .about-content strong {
-            color: var(--electric);
-            font-weight: 500;
+            color: var(--blush);
+            font-weight: 400;
         }
 
-        /* Experience */
+        /* ── Job cards ── */
         .job {
-            margin-bottom: 48px;
-            padding: 32px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 157, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            padding: 32px 36px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.35s cubic-bezier(.16,1,.3,1);
             position: relative;
             overflow: hidden;
         }
-
+        .job::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(240,160,184,0.04), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.35s;
+            pointer-events: none;
+        }
+        .job:hover {
+            border-color: rgba(240,160,184,0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(232,201,126,0.1);
+        }
+        .job:hover::after { opacity: 1; }
         .job::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--electric), var(--cyan));
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.3s ease;
+            top: 20px; bottom: 20px; left: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--gold), var(--rose));
+            border-radius: 0 2px 2px 0;
+            opacity: 0;
+            transition: opacity 0.35s;
         }
-
-        .job:hover::before {
-            transform: scaleY(1);
-        }
-
-        .job:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(0, 255, 157, 0.3);
-            transform: translateX(8px);
-        }
+        .job:hover::before { opacity: 1; }
 
         .job-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
-
         .job-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.3rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
             font-weight: 600;
-            color: var(--cream);
+            color: var(--champagne);
+            letter-spacing: 0.01em;
         }
-
         .job-company {
-            color: var(--electric);
-            font-weight: 500;
-            margin-top: 4px;
+            font-size: 0.85rem;
+            color: var(--rose);
+            font-weight: 400;
+            margin-top: 5px;
+            letter-spacing: 0.04em;
         }
-
         .job-date {
-            color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 300;
+            letter-spacing: 0.06em;
             white-space: nowrap;
+            margin-top: 4px;
+            opacity: 0.85;
         }
-
         .job-description {
-            color: var(--gray);
-            line-height: 1.7;
+            color: var(--muted);
+            font-size: 0.93rem;
+            line-height: 1.75;
+            font-weight: 300;
         }
-
         .job-description ul {
-            margin-top: 12px;
-            padding-left: 20px;
-        }
-
-        .job-description li {
-            margin-bottom: 8px;
-            position: relative;
-        }
-
-        .job-description li::marker {
-            color: var(--electric);
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
-
-        .skill-category {
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 157, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(0, 255, 157, 0.3);
-            transform: translateY(-4px);
-        }
-
-        .skill-category h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--electric);
-            margin-bottom: 16px;
-        }
-
-        .skill-category ul {
+            margin-top: 14px;
+            padding-left: 0;
             list-style: none;
-            color: var(--gray);
         }
-
-        .skill-category li {
-            margin-bottom: 8px;
-            padding-left: 20px;
+        .job-description li {
+            margin-bottom: 9px;
+            padding-left: 18px;
             position: relative;
         }
-
-        .skill-category li::before {
-            content: '▹';
+        .job-description li::before {
+            content: '◇';
             position: absolute;
             left: 0;
-            color: var(--cyan);
+            color: var(--gold);
+            font-size: 0.65rem;
+            top: 5px;
         }
 
-        /* Education */
+        /* ── Skills ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+        .skill-category {
+            padding: 28px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.35s cubic-bezier(.16,1,.3,1);
+        }
+        .skill-category:hover {
+            border-color: rgba(232,201,126,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        .skill-category h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--gold);
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(232,201,126,0.15);
+        }
+        .skill-category ul {
+            list-style: none;
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 300;
+        }
+        .skill-category li {
+            margin-bottom: 9px;
+            padding-left: 16px;
+            position: relative;
+        }
+        .skill-category li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--rose);
+            font-size: 1.2rem;
+            line-height: 1;
+            top: 2px;
+        }
+
+        /* ── Education ── */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
         .education-item {
-            margin-bottom: 32px;
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 157, 0.1);
-            border-radius: 12px;
+            padding: 28px 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.35s cubic-bezier(.16,1,.3,1);
         }
-
+        .education-item:hover {
+            border-color: rgba(240,160,184,0.3);
+            transform: translateY(-3px);
+        }
         .education-item h3 {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Cormorant Garamond', serif;
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--cream);
+            color: var(--champagne);
             margin-bottom: 8px;
         }
-
         .education-item .school {
-            color: var(--electric);
-            font-weight: 500;
-            margin-bottom: 4px;
+            color: var(--rose);
+            font-size: 0.88rem;
+            font-weight: 400;
+            margin-bottom: 6px;
         }
-
         .education-item .year {
-            color: var(--gray);
-            font-size: 0.9rem;
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            opacity: 0.8;
         }
 
-        /* Footer */
+        /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 60px 40px 40px;
-            color: var(--gray);
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 56px 40px 36px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 300;
+            border-top: 1px solid var(--border);
+            letter-spacing: 0.05em;
         }
+        footer span { color: var(--rose); }
 
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 768px) {
-            .container {
-                padding: 40px 24px;
-            }
-
-            .job-header {
-                flex-direction: column;
-            }
-
-            .contact {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
+            .container { padding: 40px 24px; }
+            header { flex-direction: column-reverse; align-items: flex-start; gap: 28px; }
+            .profile-photo { width: 120px; height: 120px; }
+            .contact { flex-direction: column; gap: 10px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .education-grid { grid-template-columns: 1fr; }
+            .job { padding: 24px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
+    <div class="bg-lines"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
     <div class="container">
+
         <header>
-            <h1 class="name">Luiza Binaj</h1>
-            <p class="title">Technical Support Engineer</p>
-            <div class="contact">
-                <span>📍 Tirana, Albania</span>
-                <a href="mailto:liza.binaj08@gmail.com">liza.binaj08@gmail.com</a>
-                <a href="tel:+355677155395">+355 677 155 395</a>
+            <div class="header-text">
+                <p class="eyebrow">Portfolio · QA Engineer</p>
+                <h1 class="name">Luiza<br>Binaj</h1>
+                <p class="title">Quality Assurance · Manual Testing · API Testing · Python Automation</p>
+                <div class="contact">
+                    <span>📍 Tirana, Albania</span>
+                    <a href="mailto:liza.binaj08@gmail.com">liza.binaj08@gmail.com</a>
+                    <a href="tel:+355677155395">+355 677 155 395</a>
+                </div>
             </div>
+            <img src="profile.jpg" alt="Luiza Binaj" class="profile-photo" />
         </header>
 
         <section id="about">
-            <h2>About Me</h2>
+            <div class="section-label">
+                <h2>About Me</h2>
+                <div class="section-rule"></div>
+            </div>
             <div class="about-content">
-                <p>I'm a Technical Support Engineer with a passion for <strong>troubleshooting, API integrations, and developer experience</strong>. With over three years of hands-on experience in SaaS support and quality assurance, I thrive at the intersection of technical problem-solving and customer success.</p>
-                <p style="margin-top: 16px;">What drives me? <strong>Getting into the code.</strong> I've spent years supporting products where I couldn't access the codebase—debugging native apps with hidden code, wanting to understand how things worked under the hood. That frustration fueled my transition into roles where I could write Python automation, troubleshoot REST APIs, and build monitoring systems that actually prevent issues before they escalate.</p>
-                <p style="margin-top: 16px;">I'm eager to join teams where I can read code, debug integrations, and help developers succeed—all while making the product better through documentation, examples, and pattern recognition.</p>
+                <p>I'm a <strong>QA Engineer</strong> with 3+ years of experience in <strong>API and web testing, data validation, and defect tracking</strong>. I have a strong foundation in functional and regression testing, with hands-on exposure to automation, monitoring tools, and CI/CD workflows.</p>
+                <p style="margin-top: 18px;">I'm <strong>collaborative, detail-oriented, and quality-driven</strong> — focused on catching issues early, improving system reliability, and working closely with development teams to deliver better software with every release.</p>
             </div>
         </section>
 
         <section id="experience">
-            <h2>Experience</h2>
-            
+            <div class="section-label">
+                <h2>Experience</h2>
+                <div class="section-rule"></div>
+            </div>
+
             <div class="job">
                 <div class="job-header">
                     <div>
-                        <div class="job-title">QA Tester</div>
-                        <div class="job-company">Webz.io</div>
+                        <div class="job-title">QA Engineer</div>
+                        <div class="job-company">SupportYourApp · Remote (Albania)</div>
                     </div>
-                    <div class="job-date">January 2025 - Present</div>
+                    <div class="job-date">January 2025 — Present</div>
                 </div>
                 <div class="job-description">
                     <ul>
-                        <li>Led technical validation of API integrations, ensuring accurate data synchronization and optimized account setup</li>
-                        <li>Tested and troubleshot REST APIs using Postman to resolve provider-impacting issues quickly</li>
-                        <li>Automated data quality checks in Python, reducing manual validation by ~40% and improving system reliability</li>
-                        <li>Integrated automated checks into CI/CD pipelines (Jenkins, Git) to prevent regressions before release</li>
-                        <li>Monitored API health via Grafana and Kibana, proactively identifying issues before escalation</li>
-                        <li>Analyzed Elasticsearch logs and implemented Slack alerts, reducing Mean Time to Detect issues by ~30%</li>
+                        <li>Test and validate APIs using Postman, including functional, smoke, and sanity testing</li>
+                        <li>Automate data validation and discrepancy checks using Jenkins and Git</li>
+                        <li>Create automated scripts in Python to automate data quality checks</li>
+                        <li>Monitor API health and HTTP response codes using Grafana and Kibana</li>
+                        <li>Use Elasticsearch to detect failed responses, missing data, and trigger alerts via Slack</li>
+                        <li>Manage QA tickets in Jira and TestRail</li>
+                        <li>Create and prioritize development tickets, collaborating with the Lead Developer during sprint planning to address critical client issues</li>
+                        <li>Perform ongoing data monitoring and quality checks to ensure data accuracy and system reliability</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">QA Analyst</div>
+                        <div class="job-company">Trapeze Group · Remote (Albania)</div>
+                    </div>
+                    <div class="job-date">November 2022 — December 2024</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Conducted manual testing of native Windows applications, web platforms, and mobile applications</li>
+                        <li>Designed and executed test plans, test scenarios, and detailed test cases for all application functionalities</li>
+                        <li>Performed sanity, smoke, regression, and confirmation testing prior to each release and system upgrade</li>
+                        <li>Logged, tracked, and managed defects using Jira with Zephyr, ensuring timely resolution and release readiness</li>
+                        <li>Leveraged prior experience as a Support Engineer at Trapeze to gain deep functional understanding and improve test coverage and quality</li>
                     </ul>
                 </div>
             </div>
@@ -477,106 +518,95 @@
                 <div class="job-header">
                     <div>
                         <div class="job-title">Software Support Analyst</div>
-                        <div class="job-company">Trapeze Group</div>
+                        <div class="job-company">Trapeze Group · Remote (Albania)</div>
                     </div>
-                    <div class="job-date">September 2021 - January 2025</div>
+                    <div class="job-date">September 2021 — November 2022</div>
                 </div>
                 <div class="job-description">
                     <ul>
-                        <li>Served as the technical point of contact for B2B customers, resolving platform and integration issues</li>
-                        <li>Owned investigation and root-cause analysis for recurring technical problems</li>
-                        <li>Collaborated with QA and Development teams to reproduce issues, validate fixes, and prevent regressions</li>
-                        <li>Participated in on-call rotations via PagerDuty, reducing MTTR by ~30%</li>
-                        <li>Created clear, self-serve documentation and runbooks in Confluence, reducing repeat incidents by ~15%</li>
-                        <li>Trained and onboarded new team members on support workflows and technical tools</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <div class="job-title">Application Support Analyst</div>
-                        <div class="job-company">Teleperformance</div>
-                    </div>
-                    <div class="job-date">February 2021 - September 2021</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        <li>Validated configuration changes and fixes prior to client delivery</li>
-                        <li>Built Power Apps and internal chatbots to improve knowledge sharing and issue resolution</li>
-                        <li>Developed UiPath automated UI tests to validate application behavior during early development</li>
+                        <li>Provided B2B technical support through the Salesforce portal, resolving issues and keeping customers informed throughout the process</li>
+                        <li>Prioritized, escalated, and closed client issues in a timely manner</li>
+                        <li>Collaborated with the Development team to investigate issues, prioritize fixes, and validate resolutions using Jira</li>
+                        <li>Participated in on-call rotations using PagerDuty</li>
+                        <li>Supported system upgrades and delivered post-upgrade assistance to end users</li>
+                        <li>Assisted in training new hires and maintaining an up-to-date knowledge base in Confluence to promote knowledge sharing</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section id="skills">
-            <h2>Skills</h2>
+            <div class="section-label">
+                <h2>Skills</h2>
+                <div class="section-rule"></div>
+            </div>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Technical Support</h3>
+                    <h3>Testing</h3>
                     <ul>
-                        <li>API Integration & Troubleshooting</li>
-                        <li>SaaS Platform Support (B2B)</li>
-                        <li>Data Validation & Monitoring</li>
-                        <li>Provider Onboarding</li>
-                        <li>Root-cause Analysis</li>
+                        <li>Manual Testing</li>
+                        <li>API Testing (Postman)</li>
+                        <li>Functional & Regression Testing</li>
+                        <li>Smoke, Sanity & Confirmation Testing</li>
+                        <li>Test Plan & Test Case Design</li>
                     </ul>
                 </div>
-
                 <div class="skill-category">
-                    <h3>Development & Tools</h3>
+                    <h3>Development & Automation</h3>
                     <ul>
-                        <li>Python (Automation)</li>
-                        <li>REST APIs (Postman)</li>
+                        <li>Python (Automation Scripts)</li>
                         <li>CI/CD (Jenkins, Git)</li>
-                        <li>Power Apps, UiPath</li>
-                        <li>Jira, TestRail, Confluence</li>
+                        <li>Data Validation & Quality Checks</li>
+                        <li>Defect Tracking (Jira, Zephyr)</li>
+                        <li>TestRail</li>
                     </ul>
                 </div>
-
                 <div class="skill-category">
-                    <h3>Monitoring & Observability</h3>
+                    <h3>Monitoring & Logging</h3>
                     <ul>
                         <li>Grafana & Kibana</li>
-                        <li>Elasticsearch Logs</li>
-                        <li>PagerDuty (On-call)</li>
+                        <li>Elasticsearch</li>
+                        <li>HTTP Response Monitoring</li>
                         <li>Slack Alerts & Automation</li>
-                        <li>System Health Monitoring</li>
+                        <li>PagerDuty (On-call)</li>
                     </ul>
                 </div>
-
                 <div class="skill-category">
                     <h3>Core Competencies</h3>
                     <ul>
-                        <li>Technical Documentation</li>
+                        <li>Attention to Detail</li>
                         <li>Cross-functional Collaboration</li>
-                        <li>Customer Success</li>
-                        <li>Problem-solving</li>
-                        <li>Proactive Issue Prevention</li>
+                        <li>Sprint Planning & Prioritization</li>
+                        <li>Technical Documentation</li>
+                        <li>B2B Customer Support</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section id="education">
-            <h2>Education</h2>
-            <div class="education-item">
-                <h3>Master's in Information Security</h3>
-                <div class="school">University of Tirana</div>
-                <div class="year">2021 - 2023</div>
+            <div class="section-label">
+                <h2>Education</h2>
+                <div class="section-rule"></div>
             </div>
-            <div class="education-item">
-                <h3>Bachelor of Business Informatics</h3>
-                <div class="school">University of Tirana</div>
-                <div class="year">2017 - 2020</div>
+            <div class="education-grid">
+                <div class="education-item">
+                    <h3>Master's in Information Security</h3>
+                    <div class="school">University of Tirana</div>
+                    <div class="year">2021 — 2023</div>
+                </div>
+                <div class="education-item">
+                    <h3>Bachelor of Business Informatics</h3>
+                    <div class="school">University of Tirana</div>
+                    <div class="year">2017 — 2020</div>
+                </div>
             </div>
         </section>
+
     </div>
 
     <footer>
-        <p>© 2026 Luiza Binaj. Built with passion for code and problem-solving.</p>
+        <p>© 2026 <span>Luiza Binaj</span> · Built with care and attention to detail</p>
     </footer>
 </body>
 </html>
